@@ -17,8 +17,8 @@ ReQuest = IniReq
 PlantType = 0 # 1 - Apple, 2 - Corn etc in alphabetical order
 buttonPressed = 0
 YesNoVal = 128
-appdir = '/home/pi/Desktop/PlantCloud/app'
-pathdir = '/home/pi/Desktop/PlantCloud/'
+appdir = '/home/pi/Desktop/PlantCloud/PlantCloud/app'
+pathdir = '/home/pi/Desktop/PlantCloud/PlantCloud/'
 btnlist = list()
 buttonVal = 128
 
