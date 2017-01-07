@@ -5,7 +5,7 @@ import subprocess
 session = gps.gps("localhost", "2947")
 session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
 
-subprocess.call('sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock',shell=True)
+#subprocess.call('sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock',shell=True)
 
 def get_gps_coords():
 	while True:
