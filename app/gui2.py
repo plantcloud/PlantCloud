@@ -15,7 +15,7 @@ IniReq = 0
 SnapshotReq = 1
 ReQuest = IniReq
 PlantType = 0 # 1 - Apple, 2 - Corn etc in alphabetical order
-# Programmed: Apple,                          Corn,           Grape, Peach, Pepper, Potato,                 Strawberry, Tomato
+# Programmed: Apple, Banana, Cabbage, Cherry, Corn, Cucumber, Grape, Peach, Pepper, Potato, Soybean, Sqash, Strawberry, Tomato
 # Plant list: Apple, Banana, Cabbage, Cherry, Corn, Cucumber, Grape, Peach, Pepper, Potato, Soybean, Sqash, Strawberry, Tomato
 buttonPressed = 0
 YesNoVal = 128
