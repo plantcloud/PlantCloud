@@ -39,53 +39,95 @@ def runApple():
 	PlantType = 1
 	print 'Apple was pressed'
 
-def runCorn():
+def runBanana():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
 	PlantType = 2
-	print 'Corn was pressed'
-
-def runGrape():
+	print 'Banana was pressed'
+	
+def runCabbage():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
 	PlantType = 3
+	print 'Cabbage was pressed'
+	
+def runCherry():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 4
+	print 'Cherry was pressed'
+	
+def runCorn():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 5
+	print 'Corn was pressed'
+
+def runCucumber():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 6
+	print 'Cucumber was pressed'
+	
+def runGrape():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 7
 	print 'Grape was pressed'
 
 def runPeach():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
-	PlantType = 4
+	PlantType = 8
 	print 'Peach was pressed'
 
 def runPepper():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
-	PlantType = 5
+	PlantType = 9
 	print 'Pepper bell was pressed'
 
 def runPotato():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
-	PlantType = 6
+	PlantType = 10
 	print 'Potato was pressed'
 
+def runSoybean():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 11
+	print 'Soybean was pressed'
+
+def runSquash():
+	global PlantType
+	global buttonPressed
+	buttonPressed = 1
+	PlantType = 12
+	print 'Squash was pressed'
+	
 def runStrawberry():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
-	PlantType = 7
+	PlantType = 13
 	print 'Strawberry was pressed'
 
 def runTomato():
 	global PlantType
 	global buttonPressed
 	buttonPressed = 1
-	PlantType = 8
+	PlantType = 14
 	print 'Tomato was pressed'
 
 def runModel():
@@ -94,18 +136,30 @@ def runModel():
 	if PlantType == 1:
 		plant = 'apple'
 	elif PlantType == 2:
-		plant = 'corn'
+		plant = 'banana'
 	elif PlantType == 3:
-		plant = 'grape'
+		plant = 'cabbage'
 	elif PlantType == 4:
-		plant = 'peach'
+		plant = 'cherry'
 	elif PlantType == 5:
-		plant = 'pepper'
+		plant = 'corn'
 	elif PlantType == 6:
-		plant = 'potato'
+		plant = 'cucumber'
 	elif PlantType == 7:
-		plant = 'strawberry'
+		plant = 'grape'
 	elif PlantType == 8:
+		plant = 'peach'
+	elif PlantType == 9:
+		plant = 'pepper'
+	elif PlantType == 10:
+		plant = 'potato'
+	elif PlantType == 11:
+		plant = 'soybean'
+	elif PlantType == 12:
+		plant = 'squash'
+	elif PlantType == 13:
+		plant = 'strawberry'
+	elif PlantType == 14:
 		plant = 'tomato'
 	graph = pathdir + 'models/' + plant + '/output_graph.pb'
 	labels = pathdir + 'models/' + plant + '/output_labels.txt'
@@ -149,18 +203,30 @@ def confirmNo(imagePath):
 	if PlantType == 1:
 		plant = 'apple'
 	elif PlantType == 2:
-		plant = 'corn'
+		plant = 'banana'
 	elif PlantType == 3:
-		plant = 'grape'
+		plant = 'cabbage'
 	elif PlantType == 4:
-		plant = 'peach'
+		plant = 'cherry'
 	elif PlantType == 5:
-		plant = 'pepper'
+		plant = 'corn'
 	elif PlantType == 6:
-		plant = 'potato'
+		plant = 'cucumber'
 	elif PlantType == 7:
-		plant = 'strawberry'
+		plant = 'grape'
 	elif PlantType == 8:
+		plant = 'peach'
+	elif PlantType == 9:
+		plant = 'pepper'
+	elif PlantType == 10:
+		plant = 'potato'
+	elif PlantType == 11:
+		plant = 'soybean'
+	elif PlantType == 12:
+		plant = 'squash'
+	elif PlantType == 13:
+		plant = 'strawberry'
+	elif PlantType == 14:
 		plant = 'tomato'
 	print("Lookup in "+plant+" dir.")
 	labelsfile = open(pathdir+'/models/'+plant+'/output_labels.txt')
@@ -220,8 +286,16 @@ def cameraDisplay():
 	text.pack()
 	AppleButton = Tkinter.Button(win,text="Apple",command=runApple)
 	AppleButton.pack(side=Tkinter.LEFT)
+	BananaButton = Tkinter.Button(win,text="Banana",command=runBanana)
+	BananaButton.pack(side=Tkinter.LEFT)
+	CabbageButton = Tkinter.Button(win,text="Cabbage",command=runCabbage)
+	CabbageButton.pack(side=Tkinter.LEFT)
+	CherryButton = Tkinter.Button(win,text="Cherry",command=runCherry)
+	CherryButton.pack(side=Tkinter.LEFT)
 	CornButton = Tkinter.Button(win,text="Corn",command=runCorn)
 	CornButton.pack(side=Tkinter.LEFT)
+	CucumberButton = Tkinter.Button(win,text="Cucumber",command=runCucumber)
+	CucumberButton.pack(side=Tkinter.LEFT)
 	GrapeButton = Tkinter.Button(win,text="Grape",command=runGrape)
 	GrapeButton.pack(side=Tkinter.LEFT)
 	PeachButton = Tkinter.Button(win,text="Peach",command=runPeach)
@@ -230,6 +304,10 @@ def cameraDisplay():
 	PepperButton.pack(side=Tkinter.LEFT)
 	PotatoButton = Tkinter.Button(win,text="Potato",command=runPotato)
 	PotatoButton.pack(side=Tkinter.LEFT)
+	SoybeanButton = Tkinter.Button(win,text="Soybean",command=runSoybean)
+	SoybeanButton.pack(side=Tkinter.LEFT)
+	SquashButton = Tkinter.Button(win,text="Squash",command=runSquash)
+	SquashButton.pack(side=Tkinter.LEFT)
 	StrawberryButton = Tkinter.Button(win,text="Strawberry",command=runStrawberry)
 	StrawberryButton.pack(side=Tkinter.LEFT)
 	TomatoButton = Tkinter.Button(win,text="Tomato",command=runTomato)
@@ -237,11 +315,17 @@ def cameraDisplay():
 	while not buttonPressed:
 		time.sleep(0.1)
 	AppleButton.destroy()
+	BananaButton.destroy()
+	CabbageButton.destroy()
+	CherryButton.destroy()
 	CornButton.destroy()
+	CucumberButton.destroy()
 	GrapeButton.destroy()
 	PeachButton.destroy()
 	PepperButton.destroy()
 	PotatoButton.destroy()
+	SoybeanButton.destroy()
+	SquashButton.destroy()
 	StrawberryButton.destroy()
 	TomatoButton.destroy()
 	text.destroy()
