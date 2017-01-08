@@ -1,14 +1,15 @@
 import Tkinter
-import tkMessageBox
+#import tkMessageBox
 import time
 from PIL import ImageTk, Image
 from threading import Thread
 import io
 import sys
-import subprocess
 import labeler
-import gps_get_coords
 from uuid import getnode as get_mac
+import gps
+import subprocess
+import commands
 
 win = Tkinter.Tk()
 IniReq = 0
@@ -24,13 +25,36 @@ pathdir = '/home/pi/Desktop/PlantCloud/PlantCloud/'
 btnlist = list()
 buttonVal = 128
 
-def on_closing():
-	if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
-		win.destroy()
+if 'gpsd'  not in commands.getstatusoutput('ps -e | grep gpsd')[1]:
+	subprocess.call('sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock',shell=True)
+session = gps.gps("localhost", "2947")
+session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+
+def get_gps_coords():
+	while True:
+			report = session.next()
+			if report['class'] == 'TPV':
+				if hasattr(report, 'lat'):
+					return report.lat,  report.lon
+
+
+#~ def on_closing():
+	#~ if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
+		#~ win.destroy()
 
 def exitProgram():
 	print("Exit Button pressed")
-	win.quit()
+	exit()
+	quit()
+	sys.exit()
+	win.destroy()
+
+def exitProgram2():
+	print("Exiting")
+	exit()
+	quit()
+	sys.exit()
+	win.destroy()
 
 def runApple():
 	global PlantType
@@ -174,15 +198,17 @@ def YesNo(value):
 	YesNoVal = value
 
 def sendYesToServer(bestMatch,bestFraction,imagePath):
-	lat,lon = gps_get_coords.get_gps_coords()
+	exitProgram2()
+	lat,lon = get_gps_coords()
 	print lat
 	print lon
 	print get_mac()
 	print("Sending info")
 
 def sendNoToServer(imagePath):
+	exitProgram2()
 	global buttonVal
-	lat,lon = gps_get_coords.get_gps_coords()
+	lat,lon = get_gps_coords()
 	print lat
 	print lon
 	print get_mac()
@@ -356,8 +382,6 @@ def cameraDisplay():
 		sendYesToServer(bestMatch,bestFraction,imagePath);
 	elif YesNoVal == 0:
 		confirmNo(imagePath)
-	time.sleep(10)
-	exitProgram()
 
 def startCameraDisplay():
 	camThread = Thread(target=cameraDisplay)
@@ -378,5 +402,5 @@ SnapshotButton = Tkinter.Button(win, text = "Snapshot", command = Snapshot)
 SnapshotButton.pack(side=Tkinter.LEFT)
 
 startCameraDisplay()
-win.protocol("WM_DELETE_WINDOW", on_closing)
+#~ win.protocol("WM_DELETE_WINDOW", on_closing)
 win.mainloop()
