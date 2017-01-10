@@ -1,5 +1,4 @@
 import Tkinter
-#import tkMessageBox
 import time
 from PIL import ImageTk, Image
 from threading import Thread
@@ -20,7 +19,7 @@ PlantType = 0 # 1 - Apple, 2 - Corn etc in alphabetical order
 # Plant list: Apple, Banana, Cabbage, Cherry, Corn, Cucumber, Grape, Peach, Pepper, Potato, Soybean, Sqash, Strawberry, Tomato
 buttonPressed = 0
 YesNoVal = 128
-appdir = '/home/pi/Desktop/PlantCloud/PlantCloud/app'
+appdir  = '/home/pi/Desktop/PlantCloud/PlantCloud/app'
 pathdir = '/home/pi/Desktop/PlantCloud/PlantCloud/'
 btnlist = list()
 buttonVal = 128
@@ -36,11 +35,6 @@ def get_gps_coords():
 			if report['class'] == 'TPV':
 				if hasattr(report, 'lat'):
 					return report.lat,  report.lon
-
-
-#~ def on_closing():
-	#~ if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
-		#~ win.destroy()
 
 def exitProgram():
 	print("Exit Button pressed")
@@ -154,8 +148,7 @@ def runTomato():
 	PlantType = 14
 	print 'Tomato was pressed'
 
-def runModel():
-	print 'Model is running'
+def getPlantType():
 	global PlantType
 	if PlantType == 1:
 		plant = 'apple'
@@ -185,6 +178,11 @@ def runModel():
 		plant = 'strawberry'
 	elif PlantType == 14:
 		plant = 'tomato'
+	return plant
+
+def runModel():
+	print 'Model is running'
+	plant = getPlantType()
 	graph = pathdir + 'models/' + plant + '/output_graph.pb'
 	labels = pathdir + 'models/' + plant + '/output_labels.txt'
 	image = pathdir + 'app/tmp.jpg'
@@ -197,22 +195,15 @@ def YesNo(value):
 	buttonPressed = 1
 	YesNoVal = value
 
-def sendYesToServer(bestMatch,bestFraction,imagePath):
-	exitProgram2()
+def sendToServer(imagePath,diseaseVal,yesNo):
+	global PlantType
+	plant = getPlantType()
 	lat,lon = get_gps_coords()
 	print lat
 	print lon
-	print get_mac()
 	print("Sending info")
-
-def sendNoToServer(imagePath):
+	subprocess.call(["./sendInfo.sh",imagePath,str(yesNo),plant,diseaseVal.replace(" ","_"),str(lat),str(lon)])
 	exitProgram2()
-	global buttonVal
-	lat,lon = get_gps_coords()
-	print lat
-	print lon
-	print get_mac()
-	print("Sending info")
 
 def btnresponse(value):
 	global buttonPressed
@@ -226,34 +217,7 @@ def confirmNo(imagePath):
 	global PlantType
 	global buttonPressed
 	global YesNoVal
-	if PlantType == 1:
-		plant = 'apple'
-	elif PlantType == 2:
-		plant = 'banana'
-	elif PlantType == 3:
-		plant = 'cabbage'
-	elif PlantType == 4:
-		plant = 'cherry'
-	elif PlantType == 5:
-		plant = 'corn'
-	elif PlantType == 6:
-		plant = 'cucumber'
-	elif PlantType == 7:
-		plant = 'grape'
-	elif PlantType == 8:
-		plant = 'peach'
-	elif PlantType == 9:
-		plant = 'pepper'
-	elif PlantType == 10:
-		plant = 'potato'
-	elif PlantType == 11:
-		plant = 'soybean'
-	elif PlantType == 12:
-		plant = 'squash'
-	elif PlantType == 13:
-		plant = 'strawberry'
-	elif PlantType == 14:
-		plant = 'tomato'
+	plant = getPlantType()
 	print("Lookup in "+plant+" dir.")
 	labelsfile = open(pathdir+'/models/'+plant+'/output_labels.txt')
 	labels = labelsfile.readlines()
@@ -286,7 +250,7 @@ def confirmNo(imagePath):
 	elif YesNoVal == 1:
 		textConfirmYesSend = Tkinter.Label(win,text="Great! Sending to the server.",font=("Helvetica",18))
 		textConfirmYesSend.pack()
-		sendNoToServer(imagePath)
+		sendToServer(imagePath,buttonVal,0)
 
 def cameraDisplay(): 
 	global buttonPressed
@@ -379,7 +343,7 @@ def cameraDisplay():
 	if YesNoVal == 1:
 		textConfirmYesSend = Tkinter.Label(win,text="Great! Sending to the server.",font=("Helvetica",18))
 		textConfirmYesSend.pack()
-		sendYesToServer(bestMatch,bestFraction,imagePath);
+		sendToServer(imagePath,bestMatch,1);
 	elif YesNoVal == 0:
 		confirmNo(imagePath)
 
@@ -402,5 +366,4 @@ SnapshotButton = Tkinter.Button(win, text = "Snapshot", command = Snapshot)
 SnapshotButton.pack(side=Tkinter.LEFT)
 
 startCameraDisplay()
-#~ win.protocol("WM_DELETE_WINDOW", on_closing)
 win.mainloop()
